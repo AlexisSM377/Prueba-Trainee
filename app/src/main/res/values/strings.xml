@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Menu</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
+    <string name="Txt_descripcion_encuesta">Encuesta para calificar el nivel de riesgo de un usuario</string>
+
+
+</resources>
