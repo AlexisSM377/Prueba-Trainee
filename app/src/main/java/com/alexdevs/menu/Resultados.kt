@@ -2,20 +2,17 @@ package com.alexdevs.menu
 
 import android.os.Bundle
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.alexdevs.menu.databinding.ActivityResultadosBinding
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import org.w3c.dom.Text
 
 class Resultados : AppCompatActivity() {
 
     private lateinit var binding: ActivityResultadosBinding
+    private lateinit var answers: HashMap<String, String>
+    private var surveyType: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityResultadosBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -23,73 +20,69 @@ class Resultados : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        val answers = intent.getSerializableExtra("answers") as HashMap<String, String>
-        val surveyType = intent.getStringExtra("surveyType")
-        val needsAttention = intent.getBooleanExtra("needsAttention", false)
+        answers = intent.getSerializableExtra("answers") as HashMap<String, String>
+        surveyType = intent.getStringExtra("surveyType")
 
-        val nivelAtencion: TextView = binding.nivelAtencion
-        val porcentajeAtencion: TextView = binding.porcentajeAtencion
-        val resultsTextView: TextView = binding.resultsTextView
+        // Mostrar respuestas inicialmente
+        displayAnswers(answers)
 
-        val resultsText = StringBuilder()
-        for ((question, answer) in answers) {
-            resultsText.append("$question: $answer\n")
+        binding.BtnEvaluar.setOnClickListener {
+            evaluateAndDisplayResults()
         }
-        resultsTextView.text = resultsText.toString()
+    }
+
+    private fun displayAnswers(answers: HashMap<String, String>) {
+        val resultsTextView: TextView = findViewById(R.id.resultsTextView)
+        val resultsText = answers.entries.joinToString("\n") { (question, answer) ->
+            "$question: $answer"
+        }
+        resultsTextView.text = resultsText
+    }
+
+    private fun evaluateAndDisplayResults() {
+        val nivelAtencion: TextView = findViewById(R.id.nivelAtencion)
+        val porcentajeAtencion: TextView = findViewById(R.id.porcentajeAtencion)
+        val porcentajeAtencionTexto: TextView = findViewById(R.id.porcentajeFinal)
+
+        val yesCount = answers.values.count { it == "Sí" }
+        val noCount = answers.values.count { it == "No" }
 
         when {
-            answers.values.all { it == "No" } -> {
-                nivelAtencion.text = when (surveyType) {
-                    "Rojo" -> "Nivel 1: 🔴"
-                    "Naranja" -> "Nivel 2: 🟠"
-                    "Amarilla" -> "Nivel 3: 🟡"
-                    "Verde" -> "Nivel 4: 🟢"
-                    "Azul" -> "Nivel 5: 🔵"
-                    else -> "Nivel desconocido"
-                }
-                porcentajeAtencion.text = "El usuario no requiere atención inmediata."
-            }
-            needsAttention -> {
+            yesCount == answers.size -> {
+                porcentajeAtencion.text = "El usuario necesita atención inmediata: 100%"
+                porcentajeAtencionTexto.text = "100%"
+                porcentajeAtencionTexto.visibility = TextView.VISIBLE
                 when (surveyType) {
-                    "Rojo" -> {
-                        nivelAtencion.text = "Nivel 1: 🔴"
-                        porcentajeAtencion.text = "ATENCIÓN: Inmediata"
-                    }
-                    "Naranja" -> {
-                        nivelAtencion.text = "Nivel 2: 🟠"
-                        porcentajeAtencion.text = "ATENCIÓN: Dentro de los siguientes 30 minutos"
-                    }
-                    "Amarilla" -> {
-                        nivelAtencion.text = "Nivel 3: 🟡"
-                        porcentajeAtencion.text = "ATENCIÓN: Los siguientes 120 minutos"
-                    }
-                    "Verde" -> {
-                        nivelAtencion.text = "Nivel 4: 🟢"
-                        porcentajeAtencion.text = "ATENCIÓN: 180 minutos"
-                    }
-                    "Azul" -> {
-                        nivelAtencion.text = "Nivel 5: 🔵"
-                        porcentajeAtencion.text = "ATENCIÓN: Por Consulta Externa"
-                    }
+                    "Roja" -> nivelAtencion.text = "Nivel 1: 🔴"
+                    "Naranja" -> nivelAtencion.text = "Nivel 2: 🟠"
+                    "Amarilla" -> nivelAtencion.text = "Nivel 3: 🟡"
+                    "Verde" -> nivelAtencion.text = "Nivel 4: 🟢"
+                    "Azul" -> nivelAtencion.text = "Nivel 5: 🔵"
+                }
+            }
+            noCount == answers.size -> {
+                porcentajeAtencion.text = "El usuario no requiere atención inmediata."
+                porcentajeAtencionTexto.visibility = TextView.GONE
+                when (surveyType) {
+                    "Roja" -> nivelAtencion.text = "Nivel 1: 🔴"
+                    "Naranja" -> nivelAtencion.text = "Nivel 2: 🟠"
+                    "Amarilla" -> nivelAtencion.text = "Nivel 3: 🟡"
+                    "Verde" -> nivelAtencion.text = "Nivel 4: 🟢"
+                    "Azul" -> nivelAtencion.text = "Nivel 5: 🔵"
                 }
             }
             else -> {
-                nivelAtencion.text = when (surveyType) {
-                    "Rojo" -> "Nivel 1: 🔴"
-                    "Naranja" -> "Nivel 2: 🟠"
-                    "Amarilla" -> "Nivel 3: 🟡"
-                    "Verde" -> "Nivel 4: 🟢"
-                    "Azul" -> "Nivel 5: 🔵"
-                    else -> "Nivel desconocido"
+                porcentajeAtencion.text = "El usuario necesita atención: 50%"
+                porcentajeAtencionTexto.text = "50%"
+                porcentajeAtencionTexto.visibility = TextView.VISIBLE
+                when (surveyType) {
+                    "Roja" -> nivelAtencion.text = "Nivel 1: 🔴"
+                    "Naranja" -> nivelAtencion.text = "Nivel 2: 🟠"
+                    "Amarilla" -> nivelAtencion.text = "Nivel 3: 🟡"
+                    "Verde" -> nivelAtencion.text = "Nivel 4: 🟢"
+                    "Azul" -> nivelAtencion.text = "Nivel 5: 🔵"
                 }
-                porcentajeAtencion.text = "El usuario requiere una evaluación adicional."
             }
-        }
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
         }
     }
 }

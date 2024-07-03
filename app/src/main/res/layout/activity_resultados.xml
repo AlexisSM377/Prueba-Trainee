@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Evaluacion de nivel de atencion"
+            android:text="Evaluación de nivel de atención"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Atencion:"
+                android:text="Atención:"
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
@@ -84,15 +84,22 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/BtnEvaluar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="Evaluar"
+            android:textAllCaps="true" />
 
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/Btn_porcentaje"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:text="Evaluar"-->
-<!--            android:textAllCaps="true" />-->
-
+        <TextView
+            android:id="@+id/porcentajeFinal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_above="@id/BtnEvaluar"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:text="" />
     </RelativeLayout>
-
 </RelativeLayout>

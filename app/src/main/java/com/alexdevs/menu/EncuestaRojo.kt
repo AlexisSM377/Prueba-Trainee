@@ -28,33 +28,32 @@ class EncuestaRojo : AppCompatActivity() {
         binding.submitButton.setOnClickListener {
             val answers = HashMap<String, String>()
             val questions = mapOf(
-                binding.radioButtonSiDificultad to "Dificultad respiratoria severa",
-                binding.radioButtonSiColoracion to "Coloración azul en piel",
-                binding.radioButtonSiFrialdad to "Frialdad generalizada",
-                binding.radioButtonSiTraumatismos to "Traumatismos severos múltiples",
-                binding.radioButtonSiQuemaduras to "Quemaduras en todo el cuerpo",
-                binding.radioButtonSiPerdida to "Pérdida de miembro u órgano",
-                binding.radioButtonSiHemorragia to "Hemorragia masiva",
-                binding.radioButtonSiTrabajo to "Trabajo de parte expulsivo",
-                binding.radioButtonSiAbuso to "Abuso sexual"
+                Pair(R.id.radioButtonSiDificultad, R.id.radioButtonNoDificultad) to "Dificultad respiratoria severa",
+                Pair(R.id.radioButtonSiColoracion, R.id.radioButtonNoColoracion) to "Coloración azul en piel",
+                Pair(R.id.radioButtonSiFrialdad, R.id.radioButtonNoFrialdad) to "Frialdad generalizada",
+                Pair(R.id.radioButtonSiTraumatismos, R.id.radioButtonNoTraumatismos) to "Traumatismos severos múltiples",
+                Pair(R.id.radioButtonSiQuemaduras, R.id.radioButtonNoQuemaduras) to "Quemaduras en todo el cuerpo",
+                Pair(R.id.radioButtonSiPerdida, R.id.radioButtonNoPerdida) to "Pérdida de miembro u órgano",
+                Pair(R.id.radioButtonSiHemorragia, R.id.radioButtonNoHemorragia) to "Hemorragia masiva",
+                Pair(R.id.radioButtonSiTrabajo, R.id.radioButtonNoTrabajo) to "Trabajo de parte expulsivo",
+                Pair(R.id.radioButtonSiAbuso, R.id.radioButtonNoAbuso) to "Abuso sexual",
+
             )
 
-            var hasYes = false
-            var hasNo = false
 
-            for ((id, question) in questions){
-                val radioButton: RadioButton = findViewById(id.id)
-                val answer = if (radioButton.isChecked) "Sí" else "No"
+
+            for ((ids, question) in questions) {
+                val (idYes, idNo) = ids
+                val radioButtonYes: RadioButton = findViewById(idYes)
+                val radioButtonNo: RadioButton = findViewById(idNo)
+                val answer = if (radioButtonYes.isChecked) "Sí" else "No"
                 answers[question] = answer
-                if (answer == "Sí") hasYes = true
-                if (answer == "No") hasNo = true
             }
 
 
             val intent = Intent(this, Resultados::class.java).apply {
                 putExtra("answers", answers)
-                putExtra("needsAttention", hasYes)
-                putExtra("surveyType", "Rojo")
+                putExtra("surveyType", "Roja")
             }
             startActivity(intent)
         }
