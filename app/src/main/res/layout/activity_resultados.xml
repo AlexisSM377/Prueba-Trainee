@@ -44,6 +44,7 @@
         android:padding="10dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -52,7 +53,7 @@
                 android:id="@+id/nivelAtencion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nivel:"
+                android:text=""
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
@@ -61,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Atención:"
+                android:text=""
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
@@ -73,6 +74,16 @@
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <ScrollView
+            android:id="@+id/toolbarScroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayout">
+
             <TextView
                 android:id="@+id/resultsTextView"
                 android:layout_width="wrap_content"
@@ -81,25 +92,6 @@
                 android:layout_marginEnd="5dp"
                 android:textSize="16sp" />
 
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/BtnEvaluar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="Evaluar"
-            android:textAllCaps="true" />
-
-        <TextView
-            android:id="@+id/porcentajeFinal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_above="@id/BtnEvaluar"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            android:text="" />
+        </ScrollView>
     </RelativeLayout>
 </RelativeLayout>

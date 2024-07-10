@@ -29,25 +29,25 @@ class MenuEncuesta : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.BtnEncuestaDos.setOnClickListener {
-            val intent = Intent(this@MenuEncuesta, EncuestaNaranja::class.java)
-            startActivity(intent)
-        }
-
-        binding.BtnEncuestaTres.setOnClickListener {
-            val intent = Intent(this@MenuEncuesta, EncuestaAmarilla::class.java)
-            startActivity(intent)
-        }
-
-        binding.BtnEncuestaCuatro.setOnClickListener {
-            val intent = Intent(this@MenuEncuesta, EncuestaVerde::class.java)
-            startActivity(intent)
-        }
-
-        binding.BtnEncuestaCinco.setOnClickListener {
-            val intent = Intent(this@MenuEncuesta, EncuestaAzul::class.java)
-            startActivity(intent)
-        }
+//        binding.BtnEncuestaDos.setOnClickListener {
+//            val intent = Intent(this@MenuEncuesta, EncuestaNaranja::class.java)
+//            startActivity(intent)
+//        }
+//
+//        binding.BtnEncuestaTres.setOnClickListener {
+//            val intent = Intent(this@MenuEncuesta, EncuestaAmarilla::class.java)
+//            startActivity(intent)
+//        }
+//
+//        binding.BtnEncuestaCuatro.setOnClickListener {
+//            val intent = Intent(this@MenuEncuesta, EncuestaVerde::class.java)
+//            startActivity(intent)
+//        }
+//
+//        binding.BtnEncuestaCinco.setOnClickListener {
+//            val intent = Intent(this@MenuEncuesta, EncuestaAzul::class.java)
+//            startActivity(intent)
+//        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
